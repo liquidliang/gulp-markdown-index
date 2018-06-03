@@ -1,24 +1,4 @@
 # gulp-markdown-index
-
-create the markdown index.
-
-
-
-## Running the example
-
-Type the following commands from the root of this repository:
-
-```
-npm install # install the plugin's dependencies
-cd examples/inplace
-npm install # install the example's dependencies
-gulp
-```
-You should find two article.json files has been created
-
-
-
-# gulp-markdown-index [![NPM version][npm-image]][npm-url]
 > A create the markdown index plugin for gulp
 
 ## Usage
