@@ -7,17 +7,13 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Mocha Tests",
-            "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+            "name": "Jest All",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest",
             "args": [
-                "-u",
-                "tdd",
-                "--timeout",
-                "999999",
-                "--colors",
                 "${workspaceFolder}/test"
             ],
-            "internalConsoleOptions": "openOnSessionStart"
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen"
         },
         {
             "type": "node",

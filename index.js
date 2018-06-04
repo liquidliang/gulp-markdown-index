@@ -47,6 +47,9 @@ module.exports = function (filename, staticDir) {
         }
       }
     }
+    if (firstFile.path.indexOf(staticDir) == -1) {
+      throw new Error(`[gulp-markdown-index] The staticDir is ${staticDir}, but markdown file ${firstFile.path} is not in the static directory`);
+    }
     list = list.map((o) => {
       o.path = path.relative(staticDir, o.path);
       return o;

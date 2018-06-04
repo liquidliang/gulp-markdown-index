@@ -6,6 +6,7 @@
     "gulp": "^3.9.1"
   },
   "devDependencies": {
+    "jest": "^23.1.0",
     "plugin-error": "^1.0.1",
     "through2": "^2.0.3",
     "vinyl": "^2.1.0"
@@ -23,6 +24,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/liquidliang/gulp-markdown-index/issues"
+  },
+  "scripts": {
+    "test": "jest test/**/*.js"
   },
   "engines": {
     "node": ">=8.10"
