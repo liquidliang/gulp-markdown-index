@@ -16,15 +16,19 @@ module.exports = function (filename, staticDir) {
   let firstFile, list = [];
 
   return through.obj((file, enc, callback) => {
-      if (file.isNull()) {
-        return callback(null, file);
-      }
+    // Do nothing if no contents
+    if (file.isNull()) {
+      this.emit("error", new PluginError('gulp-markdown-index', "File is null"));
+      this.emit("end");
+      return callback(null, file);
+    }
+
       if (!firstFile) {
         firstFile = file;
       }
       list.push({
         "path": file.path,
-        "mtime": file.stat.mtimeMs
+        "mtime": file.stat && file.stat.mtimeMs || Date.now()
       });
 
         callback();
@@ -50,10 +54,32 @@ module.exports = function (filename, staticDir) {
     if (firstFile.path.indexOf(staticDir) == -1) {
       throw new Error(`[gulp-markdown-index] The staticDir is ${staticDir}, but markdown file ${firstFile.path} is not in the static directory`);
     }
+    let directoryDict = {};
     list = list.map((o) => {
       o.path = path.relative(staticDir, o.path);
-      return o;
+      let dirName = path.dirname(o.path);
+      if(/\w+\/\w+$/.test(dirName)){
+        if(!directoryDict[dirName]){
+          directoryDict[dirName] = {
+            path: dirName.replace(path.sep, '/'),
+            mtime: o.mtime,
+            isDirectory: 1,
+            num: 1
+          }
+        }else{
+          directoryDict[dirName].num++;
+          directoryDict[dirName].mtime = Math.max(directoryDict[dirName].mtime, o.mtime);
+        }
+      }
+      return {
+        path: o.path.replace(path.sep, '/'),
+        mtime: o.mtime
+      };
     });
+
+    for(let key in directoryDict){
+      list.push(directoryDict[key]);
+    }
 
     this.push(new File({
       path: filename,
