@@ -58,7 +58,7 @@ module.exports = function (filename, staticDir) {
     list = list.map((o) => {
       o.path = path.relative(staticDir, o.path);
       let dirName = path.dirname(o.path);
-      if(/\w+\/\w+$/.test(dirName)){
+      if (/[^\///]+\/[^\///]+$/.test(dirName)){
         if(!directoryDict[dirName]){
           directoryDict[dirName] = {
             path: dirName.replace(path.sep, '/'),
