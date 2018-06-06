@@ -67,7 +67,9 @@ module.exports = function (filename, staticDir) {
             num: 1
           }
         }else{
-          directoryDict[dirName].num++;
+          if (!/\$sidebar\$\.md$/.test(o.path)){ // exclude sidebar 
+            directoryDict[dirName].num++;
+          }
           directoryDict[dirName].mtime = Math.max(directoryDict[dirName].mtime, o.mtime);
         }
       }
