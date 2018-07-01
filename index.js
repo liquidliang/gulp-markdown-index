@@ -28,7 +28,7 @@ module.exports = function (filename, staticDir) {
       }
       list.push({
         "path": file.path,
-        "mtime": file.stat && file.stat.mtimeMs || Date.now()
+        "mtime": Math.floor(file.stat && file.stat.mtimeMs || Date.now())
       });
 
         callback();
@@ -58,10 +58,10 @@ module.exports = function (filename, staticDir) {
     list = list.map((o) => {
       o.path = path.relative(staticDir, o.path);
       let dirName = path.dirname(o.path);
-      if (/[^\///]+\/[^\///]+$/.test(dirName)){
+      if (/[^\/\\]+[\/\\][^\/\\]+$/.test(dirName)){
         if(!directoryDict[dirName]){
           directoryDict[dirName] = {
-            path: dirName.replace(path.sep, '/'),
+            path: dirName.replace(/[\\]/g, '/'),
             mtime: o.mtime,
             isDirectory: 1,
             num: 1
@@ -74,7 +74,7 @@ module.exports = function (filename, staticDir) {
         }
       }
       return {
-        path: o.path.replace(path.sep, '/'),
+        path: o.path.replace(/[\\]/g, '/'),
         mtime: o.mtime
       };
     });
