@@ -1,4 +1,9 @@
 # gulp-markdown-index
+===========
+
+[![npm Version][npm-badge]][npm]
+[![Build Status][travis-badge]][travis]
+
 > A create the markdown index plugin for gulp
 
 ## Usage
